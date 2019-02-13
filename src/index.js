@@ -24,28 +24,28 @@ const winningLine = (squares) => {
 
 const Square = (props) => {
   return (
-    <button
-      className={'square' + (props.isWinCondition ? ' marked' : '')}
-      onClick={props.onClick}
-    >
+    <button className={'square' + (props.isWinCondition ? ' marked' : '')}
+            onClick={props.onClick}>
       {props.value}
     </button>
   );
 };
 
 class Board extends React.Component {
-  state = {
+  static initState = () => ({
     squares: Array(9).fill(null),
     xIsNext: true,
-  };
+  });
+
+  state = Board.initState();
 
   renderSquare(i, isWinCondition) {
     return (
-    <Square
-      value={this.state.squares[i]}
-      isWinCondition={isWinCondition}
-      onClick={() => this.handleSquareClick(i)}
-    />);
+      <Square key={i}
+              value={this.state.squares[i]}
+              isWinCondition={isWinCondition}
+              onClick={() => this.handleSquareClick(i)} />
+    );
   }
 
   currentPlayerLabel = () => {
@@ -64,6 +64,10 @@ class Board extends React.Component {
       xIsNext: !this.state.xIsNext,
     });
   }
+
+  playAgain = () => {
+    this.setState(Board.initState());
+  };
 
   render() {
     const line = winningLine(this.state.squares);
@@ -92,6 +96,12 @@ class Board extends React.Component {
           {this.renderSquare(7, line && line.indexOf(7) >= 0)}
           {this.renderSquare(8, line && line.indexOf(8) >= 0)}
         </div>
+
+        <div className="play-again">
+          <button onClick={this.playAgain}>
+            Play Again!
+          </button>
+        </div>
       </div>
     );
   }
@@ -103,10 +113,6 @@ class Game extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
         </div>
       </div>
     );

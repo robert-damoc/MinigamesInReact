@@ -49,6 +49,6 @@ ol, ul {
   flex-direction: row;
 }
 
-.game-info {
-  margin-left: 20px;
+.play-again {
+  text-align: center;
 }
