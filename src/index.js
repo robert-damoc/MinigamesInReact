@@ -24,7 +24,7 @@ const winningLine = (squares) => {
 
 const Square = (props) => {
   return (
-    <button className={'square' + (props.isWinCondition ? ' marked' : '')}
+    <button className={'square' + (props.isWinningCell ? ' marked' : '')}
             onClick={props.onClick}>
       {props.value}
     </button>
@@ -39,11 +39,11 @@ class Board extends React.Component {
 
   state = Board.initState();
 
-  renderSquare(i, isWinCondition) {
+  renderSquare(i, isWinningCell) {
     return (
       <Square key={i}
               value={this.state.squares[i]}
-              isWinCondition={isWinCondition}
+              isWinningCell={isWinningCell}
               onClick={() => this.handleSquareClick(i)} />
     );
   }
@@ -81,21 +81,15 @@ class Board extends React.Component {
     return (
       <div>
         <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare(0, line && line.indexOf(0) >= 0)}
-          {this.renderSquare(1, line && line.indexOf(1) >= 0)}
-          {this.renderSquare(2, line && line.indexOf(2) >= 0)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3, line && line.indexOf(3) >= 0)}
-          {this.renderSquare(4, line && line.indexOf(4) >= 0)}
-          {this.renderSquare(5, line && line.indexOf(5) >= 0)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6, line && line.indexOf(6) >= 0)}
-          {this.renderSquare(7, line && line.indexOf(7) >= 0)}
-          {this.renderSquare(8, line && line.indexOf(8) >= 0)}
-        </div>
+        {[...Array(3)].map((_, row) => {
+          return <div className="board-row">
+            {[...Array(3)].map((_, col) => {
+              let index = col + row * 3;
+              let isWinningCell = line && line.indexOf(index) >= 0;
+              return this.renderSquare(index, isWinningCell);
+            })}
+          </div>
+        })}
 
         <div className="play-again">
           <button onClick={this.playAgain}>
