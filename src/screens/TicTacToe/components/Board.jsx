@@ -1,4 +1,4 @@
-import Board from '../../../components/Board';
+import Board from '../../../components/Board/';
 
 export default class TicTacToeBoard extends Board {
   handleSquareClick = (i) => {

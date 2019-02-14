@@ -4,10 +4,10 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 
 import './index.css'
 
-import TopMenu from './screens/TopMenu'
+import TopMenu from './screens/TopMenu/'
 import Home from './screens/Home'
-import TicTacToe from './screens/TicTacToe'
-import Connect4 from './screens/Connect4'
+import TicTacToe from './screens/TicTacToe/'
+import Connect4 from './screens/Connect4/'
 import NotFound from './screens/NotFound'
 
 const routing = (
