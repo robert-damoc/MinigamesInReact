@@ -1,45 +1,28 @@
-import React from 'react';
-import Square from '../../../components/Square';
+import Board from '../../../components/Board';
 
-export default class TicTacToeBoard extends React.Component {
-  static initState = () => ({
-    squares: Array(9).fill(null),
-    xIsNext: true,
-  });
-
-  state = TicTacToeBoard.initState();
-
-  renderSquare(i, isWinningCell) {
-    return (
-      <Square
-        key={i}
-        value={this.state.squares[i]}
-        isWinningCell={isWinningCell}
-        onClick={() => this.handleSquareClick(i)}
-      />
-    );
-  }
-
-  currentPlayerLabel = () => {
-    return this.state.xIsNext ? 'X' : 'O';
-  };
-
+export default class TicTacToeBoard extends Board {
   handleSquareClick = (i) => {
     const squares = this.state.squares.slice();
 
-    if (this.winningLine() || squares[i] || this.draw()) { return; }
+    if (this.winningLine() || squares[i] || this.boardIsFull()) { return; }
 
     squares[i] = this.currentPlayerLabel();
 
-    this.setState({
+    this.setState(prevState => ({
       squares: squares,
-      xIsNext: !this.state.xIsNext,
-    });
+      currentPlayerIndex: (prevState.currentPlayerIndex + 1) % this.props.players.length,
+    }));
   }
 
-  playAgain = () => {
-    this.setState(TicTacToeBoard.initState());
-  };
+  gameOver = () => {
+    let line = this.winningLine();
+    if (line) { return line; }
+  }
+
+  isWinningCell = (i) => {
+    let line = this.gameOver();
+    return line && line.indexOf(i) >= 0
+  }
 
   winningLine = () => {
     const { squares } = this.state;
@@ -60,47 +43,9 @@ export default class TicTacToeBoard extends React.Component {
         return lines[i];
       }
     }
-
-    return null;
   };
 
-  draw = () => {
-    return this.state.squares.every((square) => !!square);
-  }
-
   render() {
-    let line, status;
-
-    if (this.draw()) {
-      status = 'Draw';
-    } else {
-      line = this.winningLine()
-      if (line) {
-        status = 'Winner: ' + this.state.squares[line[0]];
-      } else {
-        status = 'Next player: ' + this.currentPlayerLabel();
-      }
-    }
-
-    return (
-      <div>
-        <div className="status">{status}</div>
-        {[...Array(3)].map((_, row) => {
-          return <div key={row} className="board-row">
-            {[...Array(3)].map((_, col) => {
-              let index = col + row * 3;
-              let isWinningCell = line && line.indexOf(index) >= 0;
-              return this.renderSquare(index, isWinningCell);
-            })}
-          </div>
-        })}
-
-        <div className="play-again">
-          <button onClick={this.playAgain}>
-            Play Again!
-          </button>
-        </div>
-      </div>
-    );
+    return this.drawBoard();
   }
 }

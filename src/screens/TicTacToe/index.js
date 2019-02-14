@@ -8,7 +8,11 @@ export default class TicTacToe extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board
+            rows={3}
+            cols={3}
+            players={['X', 'O']}
+          />
         </div>
       </div>
     );
