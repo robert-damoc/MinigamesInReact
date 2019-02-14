@@ -8,7 +8,11 @@ export default class Connect4 extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board
+            rows={6}
+            cols={7}
+            players={['R', 'B']}
+          />
         </div>
       </div>
     );
