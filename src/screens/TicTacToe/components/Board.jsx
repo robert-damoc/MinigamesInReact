@@ -1,21 +1,27 @@
 import Board from '../../../components/Board/';
 
 export default class TicTacToeBoard extends Board {
+  initState = () => ({
+    squares: Array(this.props.rows * this.props.cols).fill(null),
+    currentPlayerIndex: 0,
+    line: null,
+  });
+
   handleSquareClick = (i) => {
-    const squares = this.state.squares.slice();
+    let { squares } = this.state;
 
-    if (this.winningLine() || squares[i] || this.boardIsFull()) { return; }
-
+    if (this.gameOver() || squares[i] || this.boardIsFull()) { return; }
     squares[i] = this.currentPlayerLabel();
 
     this.setState(prevState => ({
       squares: squares,
-      currentPlayerIndex: (prevState.currentPlayerIndex + 1) % this.props.players.length,
+      currentPlayerIndex: this.nextPlayer(prevState),
+      line: this.winningLine(),
     }));
   }
 
   gameOver = () => {
-    let line = this.winningLine();
+    const { line } = this.state;
     if (line) { return line; }
   }
 
