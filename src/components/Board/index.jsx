@@ -14,12 +14,12 @@ export default class Board extends Component {
     currentPlayerIndex: 0,
   });
 
-  renderSquare(i, isWinningCell) {
+  renderSquare(i, classNames) {
     return (
       <Square
         key={i}
         value={this.state.squares[i]}
-        isWinningCell={isWinningCell}
+        classNames={classNames}
         onClick={() => this.handleSquareClick(i)}
       />
     );

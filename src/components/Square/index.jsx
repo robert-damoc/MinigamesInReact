@@ -6,8 +6,8 @@ const Square = (props) => {
   const classes = () => {
     let classNames = 'square ';
 
-    if (props.isWinningCell) {
-      classNames += props.isWinningCell.join(' ');
+    if (props.classNames) {
+      classNames += props.classNames.join(' ');
     }
 
     return classNames;
