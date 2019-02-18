@@ -29,6 +29,10 @@ export default class Board extends Component {
     return this.props.players[this.state.currentPlayerIndex];
   };
 
+  nextPlayer = (prevState) => {
+    return (prevState.currentPlayerIndex + 1) % this.props.players.length;
+  }
+
   winnerLabel = () => {
     let index = this.state.currentPlayerIndex - 1;
     let playersCount = this.props.players.length;
@@ -54,6 +58,8 @@ export default class Board extends Component {
       return 'Next Player: ' + this.currentPlayerLabel();
     }
   }
+
+  isWinningCell = () => false
 
   drawBoard = () => {
     return (
