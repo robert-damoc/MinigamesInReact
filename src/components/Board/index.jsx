@@ -59,7 +59,7 @@ export default class Board extends Component {
     }
   }
 
-  isWinningCell = () => false
+  cellClasses = () => []
 
   drawBoard = () => {
     return (
@@ -69,7 +69,7 @@ export default class Board extends Component {
           return <div key={row} className="board-row">
             {[...Array(this.props.cols)].map((_, col) => {
               let index = col + row * this.props.cols;
-              return this.renderSquare(index, this.isWinningCell(index));
+              return this.renderSquare(index, this.cellClasses(index));
             })}
           </div>
         })}

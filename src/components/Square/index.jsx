@@ -3,9 +3,19 @@ import React from 'react';
 import './Square.css';
 
 const Square = (props) => {
+  const classes = () => {
+    let classNames = 'square ';
+
+    if (props.isWinningCell) {
+      classNames += props.isWinningCell.join(' ');
+    }
+
+    return classNames;
+  };
+
   return (
     <button
-      className={'square' + (props.isWinningCell ? ' marked' : '')}
+      className={classes()}
       onClick={props.onClick}
     >
       {props.value}

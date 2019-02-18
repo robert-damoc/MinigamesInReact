@@ -25,9 +25,11 @@ export default class TicTacToeBoard extends Board {
     if (line) { return line; }
   }
 
-  isWinningCell = (i) => {
+  cellClasses = (i) => {
     let line = this.gameOver();
-    return line && line.indexOf(i) >= 0
+    if (line && line.indexOf(i) >= 0) {
+      return ['marked'];
+    }
   }
 
   winningLine = () => {
