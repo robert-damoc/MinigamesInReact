@@ -10,17 +10,17 @@ export default class Board extends Component {
   };
 
   initState = () => ({
-    squares: Array(this.props.rows * this.props.cols).fill(null),
+    squares: Array(this.props.rowsCount).fill().map(() => Array(this.props.colsCount).fill(null)),
     currentPlayerIndex: 0,
   });
 
-  renderSquare(i, classNames) {
+  renderSquare(row, col, classNames) {
     return (
       <Square
-        key={i}
-        value={this.state.squares[i]}
+        key={col + row * this.props.colsCount}
+        value={this.state.squares[row][col]}
         classNames={classNames}
-        onClick={() => this.handleSquareClick(i)}
+        onClick={() => this.handleSquareClick(row, col)}
       />
     );
   };
@@ -46,7 +46,8 @@ export default class Board extends Component {
   };
 
   boardIsFull = () => {
-    return this.state.squares.every((square) => !!square);
+    const { squares } = this.state;
+    return squares.every(row => row.every(square => !!square));
   }
 
   getStatus = () => {
@@ -62,18 +63,19 @@ export default class Board extends Component {
   cellClasses = () => []
 
   drawBoard = () => {
+    const { squares } = this.state;
     return (
       <div>
         <div className="status">{this.getStatus()}</div>
-        {[...Array(this.props.rows)].map((_, row) => {
-          return <div key={row} className="board-row">
-            {[...Array(this.props.cols)].map((_, col) => {
-              let index = col + row * this.props.cols;
-              return this.renderSquare(index, this.cellClasses(index));
-            })}
-          </div>
+        {squares.map((row, rowIndex) => {
+          return (
+            <div key={'row-' + rowIndex} className="board-row">
+              {row.map((square, colIndex) => {
+                return this.renderSquare(rowIndex, colIndex, this.cellClasses(rowIndex, colIndex));
+              })}
+            </div>
+          );
         })}
-
         <div className="play-again">
           <button onClick={this.playAgain}>
             Play Again!

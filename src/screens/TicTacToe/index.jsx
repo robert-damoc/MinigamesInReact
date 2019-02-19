@@ -9,8 +9,8 @@ export default class TicTacToe extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board
-            rows={3}
-            cols={3}
+            rowsCount={3}
+            colsCount={3}
             players={['X', 'O']}
           />
         </div>

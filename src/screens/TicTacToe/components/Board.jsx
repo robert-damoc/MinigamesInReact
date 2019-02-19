@@ -4,16 +4,16 @@ import './Board.css'
 
 export default class TicTacToeBoard extends Board {
   initState = () => ({
-    squares: Array(this.props.rows * this.props.cols).fill(null),
+    squares: Array(this.props.rowsCount).fill().map(() => Array(this.props.colsCount).fill(null)),
     currentPlayerIndex: 0,
     line: null,
   });
 
-  handleSquareClick = (i) => {
+  handleSquareClick = (row, col) => {
     let { squares } = this.state;
 
-    if (this.gameOver() || squares[i] || this.boardIsFull()) { return; }
-    squares[i] = this.currentPlayerLabel();
+    if (this.gameOver() || squares[row][col] || this.boardIsFull()) { return; }
+    squares[row][col] = this.currentPlayerLabel();
 
     this.setState(prevState => ({
       squares: squares,
@@ -27,31 +27,34 @@ export default class TicTacToeBoard extends Board {
     if (line) { return line; }
   }
 
-  cellClasses = (i) => {
+  cellClasses = (row, col) => {
     let line = this.gameOver();
-    if (line && line.indexOf(i) >= 0) {
+    if (line && line.some(pair => pair[0] === row && pair[1] === col)) {
       return ['marked'];
     }
   }
 
   winningLine = () => {
     const { squares } = this.state;
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
 
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
-        return lines[i];
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i][0] && squares[i][0] === squares[i][1] && squares[i][0] === squares[i][2]) {
+        return [[i, 0], [i, 1], [i, 2]];
       }
+    }
+
+    for (let j = 0; j < squares.length; j++) {
+      if (squares[0][j] && squares[0][j] === squares[1][j] && squares[0][j] === squares[2][j]) {
+        return [[0, j], [1, j], [2, j]];
+      }
+    }
+
+    if (squares[0][0] && squares[0][0] === squares[1][1] && squares[0][0] === squares[2][2]) {
+      return [[0, 0], [1, 1], [2, 2]];
+    }
+
+    if (squares[0][2] && squares[0][2] === squares[1][1] && squares[0][2] === squares[2][0]) {
+      return [[0, 2], [1, 1], [2, 0]];
     }
   };
 
