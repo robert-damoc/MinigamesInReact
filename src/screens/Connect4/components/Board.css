@@ -1,0 +1,26 @@
+.square {
+  position: relative;
+}
+
+.player1::before, .player2::before {
+  display: block;
+  content: ' ';
+  border-radius: 50%;
+  position: absolute;
+  z-index: -1;
+  height: 28px;
+  width: 28px;
+  top: 3px;
+  left: 2px;
+}
+
+.player1::before {
+  background: #F00;
+  opacity: 0.3;
+}
+
+.player2::before {
+  background: #0F0;
+  opacity: 0.3;
+}
+
