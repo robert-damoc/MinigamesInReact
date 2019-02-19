@@ -9,8 +9,8 @@ export default class Connect4 extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board
-            rows={6}
-            cols={7}
+            rowsCount={6}
+            colsCount={7}
             players={['R', 'B']}
           />
         </div>

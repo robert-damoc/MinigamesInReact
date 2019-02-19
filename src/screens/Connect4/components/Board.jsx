@@ -4,42 +4,37 @@ import './Board.css'
 
 export default class Connect4Board extends Board {
   initState = () => ({
-    squares: Array(this.props.rows * this.props.cols).fill(null),
+    squares: Array(this.props.rowsCount).fill().map(() => Array(this.props.colsCount).fill(null)),
     currentPlayerIndex: 0,
-    lastUsedIndex: null,
+    lastUsedRowIndex: null,
+    lastUsedColIndex: null,
   });
 
-  handleSquareClick = (i) => {
-    // if (this.gameOver()) { return; }
-    // console.log(this.gameOver());
-
-    let freeIndex = this.columnFreeIndex(i % this.props.cols);
-    if (typeof freeIndex !== 'number' || this.boardIsFull()) { return; }
+  handleSquareClick = (_, col) => {
+    let freeRowIndex = this.columnFreeRowIndex(col);
+    if (typeof freeRowIndex !== 'number' || this.boardIsFull()) { return; }
 
     let { squares } = this.state;
-    squares[freeIndex] = this.currentPlayerLabel();
+    squares[freeRowIndex][col] = this.currentPlayerLabel();
 
     this.setState(prevState => ({
       squares: squares,
       currentPlayerIndex: this.nextPlayer(prevState),
-      lastUsedIndex: freeIndex,
+      lastUsedRowIndex: freeRowIndex,
+      lastUsedColIndex: col,
     }));
   }
 
-  columnFreeIndex = (colIndex) => {
-    let i, found = false;
-    for (let rowIndex = this.props.rows - 1; rowIndex >= 0; rowIndex--) {
-      i = rowIndex * this.props.cols + colIndex;
-      if (!this.state.squares[i]) {
-        found = true
-        break;
+  columnFreeRowIndex = (colIndex) => {
+    for (let rowIndex = this.props.rowsCount - 1; rowIndex >= 0; rowIndex--) {
+      if (!this.state.squares[rowIndex][colIndex]) {
+        return rowIndex;
       }
     }
-    if (found) { return i; }
   }
 
   gameOver = () => {
-    return this.boardIsFull() || this.winByColumn() || this.winByRow() || this.winByDiag();
+    // return this.boardIsFull() || this.winByColumn() || this.winByRow() || this.winByDiag();
   }
 
   winByMainDiag = (topRow, bottomRow, leftCol, rightCol) => {
@@ -52,13 +47,13 @@ export default class Connect4Board extends Board {
   }
 
   winByDiag = () => {
-    const { lastUsedIndex } = this.state;
+    const { lastUsedRowIndex } = this.state;
 
-    if (!lastUsedIndex) { return false; }
+    if (!lastUsedRowIndex) { return false; }
 
     const { cols, rows } = this.props;
-    const currentCol = lastUsedIndex % cols;
-    const currentRow = Math.floor(lastUsedIndex / cols);
+    const currentCol = lastUsedRowIndex % cols;
+    const currentRow = Math.floor(lastUsedRowIndex / cols);
 
     const lowerBoundCol = Math.max(currentCol - 3, 0);
     const upperBoundCol = Math.min(currentCol + 3, cols - 1);
@@ -83,16 +78,16 @@ export default class Connect4Board extends Board {
   }
 
   winByRow = () => {
-    const { lastUsedIndex, squares } = this.state;
+    const { lastUsedRowIndex, squares } = this.state;
 
-    if (!lastUsedIndex) { return false; }
+    if (!lastUsedRowIndex) { return false; }
 
     const { cols } = this.props;
-    const startOfRowIndex = lastUsedIndex - (lastUsedIndex % cols);
-    const endOfRowIndex = lastUsedIndex + cols - 1 - (lastUsedIndex % cols);
+    const startOfRowIndex = lastUsedRowIndex - (lastUsedRowIndex % cols);
+    const endOfRowIndex = lastUsedRowIndex + cols - 1 - (lastUsedRowIndex % cols);
 
-    const lowerBound = Math.max(lastUsedIndex - 3, startOfRowIndex);
-    const upperBound = Math.min(lastUsedIndex + 3, endOfRowIndex);
+    const lowerBound = Math.max(lastUsedRowIndex - 3, startOfRowIndex);
+    const upperBound = Math.min(lastUsedRowIndex + 3, endOfRowIndex);
     for (let i = lowerBound; i <= upperBound - 3; i++) {
       if (squares[i] === squares[i + 1] &&
         squares[i] === squares[i + 2] &&
@@ -105,13 +100,13 @@ export default class Connect4Board extends Board {
   }
 
   winByColumn = () => {
-    const { lastUsedIndex, squares } = this.state;
+    const { lastUsedRowIndex, squares } = this.state;
     const { cols, rows } = this.props;
 
-    if (!lastUsedIndex || lastUsedIndex > (cols * (rows - 3) - 1)) { return false; }
+    if (!lastUsedRowIndex || lastUsedRowIndex > (cols * (rows - 3) - 1)) { return false; }
 
     for (let i = 0; i < 3; i++) {
-      if (squares[lastUsedIndex + i * cols] !== squares[lastUsedIndex + (i + 1) * cols]) {
+      if (squares[lastUsedRowIndex + i * cols] !== squares[lastUsedRowIndex + (i + 1) * cols]) {
         return false;
       }
     }
@@ -119,14 +114,14 @@ export default class Connect4Board extends Board {
     return true;
   }
 
-  cellClasses = (i) => {
+  cellClasses = (row, col) => {
     const { squares } = this.state;
     const { players } = this.props;
     let classNames = [];
 
-    if (squares[i] === players[0]) {
+    if (squares[row][col] === players[0]) {
       classNames.push('player1');
-    } else if (squares[i] === players[1]) {
+    } else if (squares[row][col] === players[1]) {
       classNames.push('player2');
     }
 
