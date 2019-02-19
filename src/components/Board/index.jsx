@@ -33,7 +33,7 @@ export default class Board extends Component {
     return (prevState.currentPlayerIndex + 1) % this.props.players.length;
   }
 
-  winnerLabel = () => {
+  prevPlayer = () => {
     let index = this.state.currentPlayerIndex - 1;
     let playersCount = this.props.players.length;
 
@@ -53,7 +53,7 @@ export default class Board extends Component {
     if (this.boardIsFull()) {
       return 'Tie!';
     } else if (this.gameOver()) {
-      return 'Winner: ' + this.winnerLabel();
+      return 'Winner: ' + this.prevPlayer();
     } else {
       return 'Next Player: ' + this.currentPlayerLabel();
     }

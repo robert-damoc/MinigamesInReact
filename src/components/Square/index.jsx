@@ -2,23 +2,15 @@ import React from 'react';
 
 import './Square.css';
 
-const Square = (props) => {
-  const classes = () => {
-    let classNames = 'square ';
-
-    if (props.classNames) {
-      classNames += props.classNames.join(' ');
-    }
-
-    return classNames;
-  };
+const Square = ({ classNames = [], value, onClick }) => {
+  const classes = `square ${classNames.join(' ')}`;
 
   return (
     <button
-      className={classes()}
-      onClick={props.onClick}
+      className={classes}
+      onClick={onClick}
     >
-      {props.value}
+      {value}
     </button>
   );
 };
