@@ -11,7 +11,7 @@ export default class Connect4 extends React.Component {
           <Board
             rowsCount={6}
             colsCount={7}
-            players={['R', 'B']}
+            players={['R', 'G']}
           />
         </div>
       </div>
