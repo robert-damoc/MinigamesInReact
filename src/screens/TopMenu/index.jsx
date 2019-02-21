@@ -10,6 +10,7 @@ class TopMenu extends Component {
         <Link to="/">Home</Link>
         <Link to="/tic-tac-toe">TicTacToe</Link>
         <Link to="/connect4">Connect4</Link>
+        <Link to="/game-of-life">Game of Life</Link>
       </div>
     );
   }

@@ -70,7 +70,7 @@ export default class Board extends Component {
         {squares.map((row, rowIndex) => {
           return (
             <div key={'row-' + rowIndex} className="board-row">
-              {row.map((square, colIndex) => {
+              {row.map((_, colIndex) => {
                 return this.renderSquare(rowIndex, colIndex, this.cellClasses(rowIndex, colIndex));
               })}
             </div>
@@ -78,7 +78,7 @@ export default class Board extends Component {
         })}
         <div className="play-again">
           <button onClick={this.playAgain}>
-            Play Again!
+            {this.props.playAgainText || 'Play Again!'}
           </button>
         </div>
       </div>

@@ -8,6 +8,7 @@ import TopMenu from './screens/TopMenu/'
 import Home from './screens/Home'
 import TicTacToe from './screens/TicTacToe/'
 import Connect4 from './screens/Connect4/'
+import GameOfLife from './screens/GameOfLife/'
 import NotFound from './screens/NotFound'
 
 const routing = (
@@ -18,6 +19,7 @@ const routing = (
         <Route exact path="/" component={Home} />
         <Route path='/tic-tac-toe' component={TicTacToe} />
         <Route path='/connect4' component={Connect4} />
+        <Route path='/game-of-life' component={GameOfLife} />
         <Route component={NotFound} />
       </Switch>
     </div>
