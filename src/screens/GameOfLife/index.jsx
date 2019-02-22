@@ -9,8 +9,8 @@ export default class GameOfLife extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board
-            rowsCount={30}
-            colsCount={50}
+            rowsCount={23}
+            colsCount={38}
             players={[]}
             playAgainText={'RESTART'}
           />

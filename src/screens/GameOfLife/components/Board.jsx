@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from '../../../components/Board/';
+import ExamplePlacement from './Examples';
 
 import './Board.css'
 
@@ -52,6 +53,7 @@ export default class GameOfLifeBoard extends Board {
     this.state.squares[rowIndex][colIndex] = !this.state.squares[rowIndex][colIndex];
     this.setState(_ => ({ squares: this.state.squares }));
   }
+
   gameOver = () => false
 
   startGame = () => {
@@ -121,6 +123,10 @@ export default class GameOfLifeBoard extends Board {
     return nCount;
   }
 
+  examplePlacement = () => {
+    this.setState(_ => ({ squares: ExamplePlacement.glidersSpawner(this.props, this.state) }));
+  }
+
   render() {
     return (
       <div>
@@ -137,6 +143,9 @@ export default class GameOfLifeBoard extends Board {
           </button>
           <button onClick={this.setRandomCells}>
             PLACE RANDOM CELLS
+          </button>
+          <button onClick={this.examplePlacement}>
+            EXAMPLE
           </button>
         </div>
       </div>
