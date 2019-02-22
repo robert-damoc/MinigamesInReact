@@ -3,6 +3,10 @@
 }
 
 .dead, .alive {
-  height: 10px;
-  width: 10px;
+  height: 17px;
+  width: 17px;
+}
+
+.start-game {
+  text-align: center;
 }

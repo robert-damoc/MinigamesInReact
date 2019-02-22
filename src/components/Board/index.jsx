@@ -10,9 +10,14 @@ export default class Board extends Component {
   };
 
   initState = () => ({
-    squares: Array(this.props.rowsCount).fill().map(() => Array(this.props.colsCount).fill(null)),
+    squares: this.initSquares(),
     currentPlayerIndex: 0,
   });
+
+  initSquares = (defaultValue = null) => {
+    return Array(this.props.rowsCount).fill()
+                                      .map(_ => Array(this.props.colsCount).fill(defaultValue));
+  }
 
   renderSquare(row, col, classNames) {
     return (
