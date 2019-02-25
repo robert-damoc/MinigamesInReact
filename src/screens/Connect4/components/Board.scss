@@ -19,12 +19,11 @@
   opacity: 0.3;
 }
 
-.square.winningCell::before {
-  opacity: 1;
-}
-
 .player2::before {
   background: #0F0;
   opacity: 0.3;
 }
 
+.square.winningCell::before {
+  opacity: 1;
+}

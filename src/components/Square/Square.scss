@@ -11,10 +11,10 @@
   padding: 0;
   text-align: center;
   width: 34px;
-}
 
-.square:focus {
-  outline: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 .kbd-navigation .square:focus {
