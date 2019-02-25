@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import './TopMenu.css'
+import './TopMenu.scss'
 
 class TopMenu extends Component {
   render() {

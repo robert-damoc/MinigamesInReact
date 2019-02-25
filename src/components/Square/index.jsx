@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Square.css';
+import './Square.scss';
 
 const Square = ({ classNames = [], value, onClick }) => {
   const classes = `square ${classNames.join(' ')}`;

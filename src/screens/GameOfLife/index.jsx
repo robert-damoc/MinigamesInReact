@@ -1,7 +1,7 @@
 import React from 'react';
 import Board from './components/Board';
 
-import './GameOfLife.css';
+import './GameOfLife.scss';
 
 export default class GameOfLife extends React.Component {
   render() {
@@ -9,8 +9,8 @@ export default class GameOfLife extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board
-            rowsCount={23}
-            colsCount={38}
+            rowsCount={25}
+            colsCount={40}
             players={[]}
             playAgainText={'RESTART'}
           />

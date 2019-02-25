@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Square from '../Square';
 
-import './Board.css';
+import './Board.scss';
 
 export default class Board extends Component {
   constructor(props) {

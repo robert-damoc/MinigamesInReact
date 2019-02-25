@@ -1,7 +1,7 @@
 import React from 'react';
 import Board from './components/Board';
 
-import './Connect4.css';
+import './Connect4.scss';
 
 export default class Connect4 extends React.Component {
   render() {

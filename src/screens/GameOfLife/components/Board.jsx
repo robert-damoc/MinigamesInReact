@@ -2,7 +2,7 @@ import React from 'react';
 import Board from '../../../components/Board/';
 import ExamplePlacement from './Examples';
 
-import './Board.css'
+import './Board.scss'
 
 export default class GameOfLifeBoard extends Board {
   constructor(props) {

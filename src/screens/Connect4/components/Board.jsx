@@ -1,6 +1,6 @@
 import Board from '../../../components/Board/';
 
-import './Board.css'
+import './Board.scss'
 
 export default class Connect4Board extends Board {
   initState = () => ({
