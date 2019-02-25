@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.scss'
 
 import TopMenu from './screens/TopMenu/'

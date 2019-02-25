@@ -4,7 +4,7 @@ import './Board.scss'
 
 export default class Connect4Board extends Board {
   initState = () => ({
-    squares: Array(this.props.rowsCount).fill().map(() => Array(this.props.colsCount).fill(null)),
+    squares: this.initSquares(),
     currentPlayerIndex: 0,
     lastUsedRowIndex: null,
     lastUsedColIndex: null,
@@ -144,6 +144,6 @@ export default class Connect4Board extends Board {
   }
 
   render() {
-    return this.drawBoard();
+    return this.renderBoard();
   }
 }

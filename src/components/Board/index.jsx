@@ -19,17 +19,6 @@ export default class Board extends Component {
                                       .map(_ => Array(this.props.colsCount).fill(defaultValue));
   }
 
-  renderSquare(row, col, classNames) {
-    return (
-      <Square
-        key={col + row * this.props.colsCount}
-        value={this.state.squares[row][col]}
-        classNames={classNames}
-        onClick={() => this.handleSquareClick(row, col)}
-      />
-    );
-  };
-
   currentPlayerLabel = () => {
     return this.props.players[this.state.currentPlayerIndex];
   };
@@ -67,30 +56,66 @@ export default class Board extends Component {
 
   cellClasses = () => []
 
-  drawBoard = () => {
+  controlButtons = () => {
+    return ([{
+      classes: 'play-again',
+      text: 'Play Again!',
+      onClick: this.playAgain,
+    }]);
+  }
+
+  renderSquare(row, col, classNames) {
+    return (
+      <Square
+        key={col + row * this.props.colsCount}
+        value={this.state.squares[row][col]}
+        classNames={classNames}
+        onClick={() => this.handleSquareClick(row, col)}
+      />
+    );
+  };
+
+  renderBoard = () => {
     const { squares } = this.state;
+
     return (
       <div>
         <div className="status">{this.getStatus()}</div>
-        {squares.map((row, rowIndex) => {
-          return (
-            <div key={'row-' + rowIndex} className="board-row">
-              {row.map((_, colIndex) => {
-                return this.renderSquare(rowIndex, colIndex, this.cellClasses(rowIndex, colIndex));
-              })}
-            </div>
-          );
-        })}
-        <div className="play-again">
-          <button onClick={this.playAgain}>
-            {this.props.playAgainText || 'Play Again!'}
-          </button>
+
+        <div className="container">
+          {squares.map((row, rowIndex) => {
+            return (
+              <div key={'row-' + rowIndex} className="row">
+                {row.map((_, colIndex) => {
+                  return this.renderSquare(rowIndex, colIndex, this.cellClasses(rowIndex, colIndex));
+                })}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="controlButtons container">
+          <div className="row">
+            {this.controlButtons().map((controlButton, index) => {
+              return (
+                <div className={controlButton.classes} key={'controlButton' + index}>
+                  <button
+                    type="button"
+                    className="btn btn-outline-dark btn-sm"
+                    onClick={controlButton.onClick}
+                  >
+                    {controlButton.text}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     )
   };
 
   render() {
-    return this.drawBoard();
+    return this.renderBoard();
   };
 }

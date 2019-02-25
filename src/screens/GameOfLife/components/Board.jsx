@@ -1,4 +1,3 @@
-import React from 'react';
 import Board from '../../../components/Board/';
 import ExamplePlacement from './Examples';
 
@@ -9,6 +8,32 @@ export default class GameOfLifeBoard extends Board {
     super(props);
     this.state = this.initState();
   };
+
+  controlButtons = () => {
+    return ([
+      {
+        classes: 'start-game',
+        text: 'Start',
+        onClick: this.startGame,
+      }, {
+        classes: 'pause-game',
+        text: 'Pause',
+        onClick: this.pauseGame,
+      }, {
+        classes: 'clear',
+        text: 'Clear',
+        onClick: this.clearBoard,
+      }, {
+        classes: 'set-random-cells',
+        text: 'Place Random Cells',
+        onClick: this.setRandomCells,
+      }, {
+        classes: 'examples',
+        text: 'Example',
+        onClick: this.examplePlacement,
+      },
+    ]);
+  }
 
   initState = () => {
     if (this.state.interval) { clearInterval(this.state.interval); }
@@ -104,7 +129,7 @@ export default class GameOfLifeBoard extends Board {
     if (this.state.interval) { clearInterval(this.state.interval); }
 
     this.setState(_ => ({
-      squares: Array(this.props.rowsCount).fill().map(() => Array(this.props.colsCount).fill(false)),
+      squares: this.initSquares(false),
       interval: null,
     }))
   }
@@ -128,27 +153,6 @@ export default class GameOfLifeBoard extends Board {
   }
 
   render() {
-    return (
-      <div>
-        {this.drawBoard()}
-        <div className="start-game">
-          <button onClick={this.startGame}>
-            START
-          </button>
-          <button onClick={this.pauseGame}>
-            PAUSE
-          </button>
-          <button onClick={this.clearBoard}>
-            CLEAR
-          </button>
-          <button onClick={this.setRandomCells}>
-            PLACE RANDOM CELLS
-          </button>
-          <button onClick={this.examplePlacement}>
-            EXAMPLE
-          </button>
-        </div>
-      </div>
-    )
+    return this.renderBoard();
   }
 }

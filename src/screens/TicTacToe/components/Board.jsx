@@ -4,7 +4,7 @@ import './Board.scss'
 
 export default class TicTacToeBoard extends Board {
   initState = () => ({
-    squares: Array(this.props.rowsCount).fill().map(() => Array(this.props.colsCount).fill(null)),
+    squares: this.initSquares(),
     currentPlayerIndex: 0,
     line: null,
   });
@@ -59,6 +59,6 @@ export default class TicTacToeBoard extends Board {
   };
 
   render() {
-    return this.drawBoard();
+    return this.renderBoard();
   }
 }

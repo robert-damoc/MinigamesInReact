@@ -12,7 +12,6 @@ export default class GameOfLife extends React.Component {
             rowsCount={25}
             colsCount={40}
             players={[]}
-            playAgainText={'RESTART'}
           />
         </div>
       </div>
