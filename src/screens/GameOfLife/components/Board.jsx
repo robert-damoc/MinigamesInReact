@@ -10,15 +10,16 @@ export default class GameOfLifeBoard extends Board {
   };
 
   controlButtons = () => {
+    let playPauseText = 'Play';
+    if (this.state.interval) {
+      playPauseText = 'Stop';
+    }
+
     return ([
       {
-        classes: 'start-game',
-        text: 'Start',
-        onClick: this.startGame,
-      }, {
-        classes: 'pause-game',
-        text: 'Pause',
-        onClick: this.pauseGame,
+        classes: 'play-pause-game',
+        text: playPauseText,
+        onClick: this.swapGameState,
       }, {
         classes: 'clear',
         text: 'Clear',
@@ -33,6 +34,14 @@ export default class GameOfLifeBoard extends Board {
         onClick: this.examplePlacement,
       },
     ]);
+  }
+
+  swapGameState = () => {
+    if (this.state.interval) {
+      this.pauseGame();
+    } else {
+      this.startGame();
+    }
   }
 
   initState = () => {
@@ -104,12 +113,6 @@ export default class GameOfLifeBoard extends Board {
             nextSquares[row][col] = false;
           }
         }
-      }
-
-      if (JSON.stringify(squares) === JSON.stringify(nextSquares)) {
-        setTimeout(_ => {
-          clearInterval(interval);
-        }, 5000);
       }
 
       this.setState(_ => ({ squares: nextSquares }));
