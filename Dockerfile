@@ -1,14 +1,12 @@
-FROM node:11.9
+FROM node:11.9-alpine
 
-ADD yarn.lock /yarn.lock
-ADD package.json /package.json
+RUN apk add --no-cache bash
 
-ENV PATH /app/node_modules/.bin:$PATH
-
-RUN yarn
-
+RUN mkdir /app
 WORKDIR /app
 ADD . /app
+
+RUN yarn --force
 
 EXPOSE 3000
 EXPOSE 35729
