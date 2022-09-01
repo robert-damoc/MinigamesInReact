@@ -6,6 +6,7 @@ const Square = ({ classNames = [], value, onClick }) => {
   const classes = `col ${classNames.join(' ')}`;
   const firstChange = 'first change here; with update';
   const secondChange = 'second change here';
+  const finalChange = 'yaba daba doo';
 
   return (
     <div className={classes} onClick={onClick}>
